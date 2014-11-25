@@ -364,7 +364,7 @@ static int handle_headers(request_rec *r,
     return 0;
 }
 
-static apr_status_t dispatch(proxy_conn_rec *conn, proxy_dir_conf *conf,
+static apr_status_t dispatch(proxy_conn_rec *conn, proxy_server_conf *conf,
                              request_rec *r, apr_pool_t *setaside_pool,
                              apr_uint16_t request_id,
                              const char **err)
@@ -711,7 +711,7 @@ recv_again:
 static int fcgi_do_request(apr_pool_t *p, request_rec *r,
                            proxy_conn_rec *conn,
                            conn_rec *origin,
-                           proxy_dir_conf *conf,
+                           proxy_server_conf *conf,
                            apr_uri_t *uri,
                            char *url, char *server_portstr)
 {
@@ -776,9 +776,6 @@ static int proxy_fcgi_handler(request_rec *r, proxy_worker *worker,
     conn_rec *origin = NULL;
     proxy_conn_rec *backend = NULL;
 
-    proxy_dir_conf *dconf = ap_get_module_config(r->per_dir_config,
-                                                 &proxy_module);
-
     apr_pool_t *p = r->pool;
 
     apr_uri_t *uri = apr_palloc(r->pool, sizeof(*uri));
@@ -832,7 +829,7 @@ static int proxy_fcgi_handler(request_rec *r, proxy_worker *worker,
     }
 
     /* Step Three: Process the Request */
-    status = fcgi_do_request(p, r, backend, origin, dconf, uri, url,
+    status = fcgi_do_request(p, r, backend, origin, conf, uri, url,
                              server_portstr);
 
 cleanup:
