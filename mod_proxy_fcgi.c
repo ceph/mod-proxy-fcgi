@@ -384,8 +384,8 @@ static apr_status_t dispatch(proxy_conn_rec *conn, proxy_dir_conf *conf,
     char *iobuf = stack_iobuf;
 
     *err = NULL;
-    if (conn->worker->s->io_buffer_size_set) {
-        iobuf_size = conn->worker->s->io_buffer_size;
+    if (conn->worker->io_buffer_size_set) {
+        iobuf_size = conn->worker->io_buffer_size;
         iobuf = apr_palloc(r->pool, iobuf_size);
     }
 
