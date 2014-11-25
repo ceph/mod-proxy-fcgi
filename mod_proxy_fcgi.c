@@ -18,6 +18,8 @@
 #include "util_fcgi.h"
 #include "util_script.h"
 
+#include "mod_proxy_compat.h"
+
 module AP_MODULE_DECLARE_DATA proxy_fcgi_module;
 
 /*
