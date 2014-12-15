@@ -1,0 +1,23 @@
+mod_proxy_fcgi for Apache 2.2 
+=============================
+
+Apache 2.4 shipped mod_proxy_fcgi as part of the core distribution. This git
+repository provides a modified version backported to work with Apache 2.2 in
+order to work on older distributions (eg. Red Hat Enterprise Linux 6).
+
+To get the source, compile, and install:
+
+  git clone https://github.com/yehudasa/mod-proxy-fcgi
+  cd mod-proxy-fcgi
+  autoconf
+  ./configure
+  make
+  make install
+
+To load this module, you must add the main mod_proxy to your configuration,
+then load mod_proxy_fcgi:
+
+  LoadModule proxy_module modules/mod_proxy.so
+  LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+
+and of course reload the httpd server after your changes.

@@ -1,0 +1,14 @@
+#
+#  Makefile for mod_proxy_fcgi for Apache 2.2
+#
+builddir=.
+top_srcdir=@APXS_PREFIX@
+top_builddir=@APXS_INSTALLBUILDDIR@/../
+include @APXS_INSTALLBUILDDIR@/special.mk
+
+all: local-shared-build
+
+clean:
+	-rm -f *.o *.lo *.slo *.la
+
+install: install-modules-yes
