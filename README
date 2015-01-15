@@ -7,7 +7,7 @@ order to work on older distributions (eg. Red Hat Enterprise Linux 6).
 
 To get the source, compile, and install:
 
-  git clone https://github.com/yehudasa/mod-proxy-fcgi
+  git clone https://github.com/ceph/mod-proxy-fcgi
   cd mod-proxy-fcgi
   autoconf
   ./configure
