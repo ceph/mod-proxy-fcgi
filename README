@@ -5,6 +5,9 @@ Apache 2.4 shipped mod_proxy_fcgi as part of the core distribution. This git
 repository provides a modified version backported to work with Apache 2.2 in
 order to work on older distributions (eg. Red Hat Enterprise Linux 6).
 
+Building from source
+====================
+
 To get the source, compile, and install:
 
   git clone https://github.com/ceph/mod-proxy-fcgi
@@ -14,6 +17,9 @@ To get the source, compile, and install:
   make
   make install
 
+Loading the module in Apache
+============================
+
 To load this module, you must add the main mod_proxy to your configuration,
 then load mod_proxy_fcgi:
 
@@ -21,3 +27,33 @@ then load mod_proxy_fcgi:
   LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
 
 and of course reload the httpd server after your changes.
+
+Configuring Apache
+==================
+
+See the upstream Apache documentation
+(https://httpd.apache.org/docs/2.4/mod/mod_proxy_fcgi.html) for details about
+mod_proxy_fcgi.
+
+In this backported version of the module, "ProxyPass" statements work on
+Apache 2.2, but "SetHandler" statements do not work.
+
+In other words, you should use the following type configuration:
+
+<VirtualHost *:80>
+    ServerName localhost
+    DocumentRoot /var/www/html
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    LogLevel debug
+
+    RewriteEngine On
+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+
+    SetEnv proxy-nokeepalive 1
+
+    ProxyPass / fcgi://127.0.01:9000/
+</VirtualHost>
