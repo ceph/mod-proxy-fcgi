@@ -36,7 +36,9 @@ See the upstream Apache documentation
 mod_proxy_fcgi.
 
 In this backported version of the module, "ProxyPass" statements work on
-Apache 2.2, but "SetHandler" statements do not work.
+Apache 2.2, but "SetHandler" statements do not work. Also, Apache 2.2's
+mod_proxy only supports TCP sockets ("fcgi://"). You cannot use Unix domain
+sockets ("unix://") with this backported version of mod_proxy_fcgi.
 
 In other words, you should use the following type configuration:
 
