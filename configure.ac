@@ -1,5 +1,5 @@
 AC_INIT([mod_proxy_fcgi], [2.4.10], [yehudasa@redhat.com])
-AC_DEFINE([PACKAGE_URL],["https://github.com/yehudasa/mod-proxy-fcgi"],[project url])
+AC_DEFINE([PACKAGE_URL],["https://github.com/ceph/mod-proxy-fcgi"],[project url])
 
 AC_PROG_CC
 
