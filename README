@@ -17,6 +17,10 @@ To get the source, compile, and install:
   make
   make install
 
+(Note: you'll need the apxs utility, which ships in the Apache "devel" package
+on Linux distributions. Install "httpd-devel" on Red Hat-based distros, and
+"apache2-dev" on Debian-based distros.)
+
 Loading the module in Apache
 ============================
 
