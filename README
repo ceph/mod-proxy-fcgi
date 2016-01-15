@@ -5,6 +5,13 @@ Apache 2.4 shipped mod_proxy_fcgi as part of the core distribution. This git
 repository provides a modified version backported to work with Apache 2.2 in
 order to work on older distributions (eg. Red Hat Enterprise Linux 6).
 
+Installing from EPEL
+====================
+
+If you are on RHEL 6 or derivatives (eg. CentOS 6), you can install a pre-built
+version of this software from EPEL. Enable EPEL on your system
+(https://fedoraproject.org/wiki/EPEL), then "yum install mod_proxy_fcgi".
+
 Building from source
 ====================
 
