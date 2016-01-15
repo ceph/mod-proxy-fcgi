@@ -5,6 +5,12 @@ AC_PROG_CC
 
 AC_PATH_PROG(APXS, 'apxs')
 
+if test x"$APXS" = x"" ; then
+  AC_CHECK_FILE([/etc/redhat-release],
+    [AC_MSG_FAILURE([apxs is missing, run "sudo yum install httpd-devel"])],
+    [AC_MSG_FAILURE([apxs is missing, run "sudo apt-get install apache2-dev"])])
+fi
+
 APXS_PREFIX=`$APXS -q prefix`
 APXS_INSTALLBUILDDIR=`$APXS -q installbuilddir`
 AC_SUBST([APXS_PREFIX])
