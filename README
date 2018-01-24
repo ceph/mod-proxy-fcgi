@@ -15,18 +15,54 @@ version of this software from EPEL. Enable EPEL on your system
 Building from source
 ====================
 
-To get the source, compile, and install:
+Building from source can be a bit more technical.  
+Additionally, a new LoadModule directive needs to be added to httpd configuration files.
 
-  git clone https://github.com/ceph/mod-proxy-fcgi
-  cd mod-proxy-fcgi
-  autoconf
-  ./configure
-  make
-  make install
-
-(Note: you'll need the apxs utility, which ships in the Apache "devel" package
+You'll need the apxs utility, which ships in the Apache "devel" package
 on Linux distributions. Install "httpd-devel" on Red Hat-based distros, and
-"apache2-dev" on Debian-based distros.)
+"apache2-dev" on Debian-based distros.
+
+Building from source on RHEL/CentOS 6
+=====================================
+
+To get the dependencies, source, compile, and install:
+
+  yum install -y curl make autoconf gcc glibc-headers httpd-devel;
+  curl -L https://github.com/ceph/mod-proxy-fcgi/archive/master.tar.gz | tar xz && cd mod-proxy-fcgi-master;
+  cd mod-proxy-fcgi-master;
+  autoconf;
+  ./configure;
+  make;
+  make install;
+  make clean;
+  chmod 644 /usr/lib/apache2/modules/mod_proxy_fcgi.so;
+  printf "LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so" > /etc/httpd/conf/httpd.conf;
+  cd ..;
+  rm -Rf mod-proxy-fcgi-master;
+
+Building from source on Debian 7
+================================
+
+To get the dependencies, source, compile, and install:
+
+  apt-get install -qy curl make autoconf gcc libc6-dev apache2-threaded-dev;
+  curl -L https://github.com/ceph/mod-proxy-fcgi/archive/master.tar.gz | tar xz && cd mod-proxy-fcgi-master;
+  cd mod-proxy-fcgi-master;
+  ln -sf apxs2 /usr/bin/apxs;
+  autoconf;
+  ./configure;
+  sed -i "s>top_srcdir\=>top_srcdir\=.>" Makefile;
+  mkdir -p build;
+  ln -sf /usr/share/apache2/build/instdso.sh build/instdso.sh;
+  make;
+  make install;
+  make clean;
+  chmod 644 /usr/lib/apache2/modules/mod_proxy_fcgi.so;
+  printf "# Depends: proxy\nLoadModule proxy_fcgi_module /usr/lib/apache2/modules/mod_proxy_fcgi.so" > /etc/apache2/mods-available/proxy_fcgi.load;
+  a2enmod proxy_fcgi;
+  cd ..;
+  rm -Rf mod-proxy-fcgi-master;
+  rm /usr/bin/apxs;
 
 Loading the module in Apache
 ============================
